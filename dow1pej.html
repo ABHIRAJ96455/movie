@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Movie Download Page</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 50px 20px;
+      background-color: #1a1a1a;
+      color: #d3d3d3;
+    }
+    img {
+      max-width: 90%;
+      max-height: 400px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.05);
+    }
+    h1 {
+      font-size: 26px;
+      margin: 25px auto 10px;
+      color: #cccccc;
+      max-width: 800px;
+    }
+    #timer {
+      font-size: 28px;
+      margin: 30px 0;
+      color: #aaaaaa;
+    }
+    #downloadLinks a {
+      display: block;
+      margin: 10px 0;
+      padding: 12px;
+      background-color: #080668;
+      color: #ffffff;
+      font-size: 18px;
+      border-radius: 6px;
+      text-decoration: none;
+      width: 80%;
+      max-width: 300px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #downloadLinks a:hover {
+      background-color: #f80d2c;
+    }
+  </style>
+</head>
+<body>
+
+  <img id="movieImg" src="" alt="Movie Poster" />
+  <h1 id="movieTitle">Loading...</h1>
+
+  <div id="timer">Timer: 5s</div>
+
+  <div id="downloadLinks" style="display: none;">
+    <a id="videoLink" href="#" download>▶️ Watch Video</a>
+    <a id="p360Link" href="#" download>📥 360p Download</a>
+    <a id="p720Link" href="#" download>📥 720p Download</a>
+    <a id="p1080Link" href="#" download>📥 1080p60 Download</a>
+    <a id="p2160Link" href="#" download>📥 2160p60 Download</a>
+  </div>
+
+  <script>
+    function getParam(name) {
+      const url = new URL(window.location.href);
+      return decodeURIComponent(url.searchParams.get(name) || '');
+    }
+
+    const title = getParam('title');
+    const img = getParam('img');
+    const video = getParam('video');
+    const p360 = getParam('p360');
+    const p720 = getParam('p720');
+    const p1080 = getParam('p1080');
+    const p2160 = getParam('p2160');
+
+    document.getElementById('movieTitle').textContent = title;
+    document.getElementById('movieImg').src = img;
+    document.getElementById('movieImg').alt = title;
+
+    document.getElementById('videoLink').href = video;
+    document.getElementById('p360Link').href = p360;
+    document.getElementById('p720Link').href = p720;
+    document.getElementById('p1080Link').href = p1080;
+    document.getElementById('p2160Link').href = p2160;
+
+    const timerDisplay = document.getElementById('timer');
+    const downloadLinks = document.getElementById('downloadLinks');
+
+    let timeLeft = 0;
+    timerDisplay.textContent = ` ${timeLeft}`;
+
+    const countdown = setInterval(() => {
+      timeLeft--;
+      timerDisplay.textContent = `Timer: ${timeLeft}s`;
+      if (timeLeft <= 0) {
+        clearInterval(countdown);
+        timerDisplay.style.display = 'none';
+        downloadLinks.style.display = 'block';
+      }
+    }, 1000);
+  </script>
+
+</body>
+</html>
